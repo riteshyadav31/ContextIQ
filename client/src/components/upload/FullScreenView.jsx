@@ -1,0 +1,294 @@
+// ============================================================
+// FullScreenView.jsx
+//
+// The fixed inset-0 overlay shown once documents are processed
+// and the user is in Chat/Summary/Notes/Explain mode — the
+// Claude/Gemini-style full-screen layout. Combines the desktop
+// sidebar, the mobile hamburger top bar, and the body (ChatPanel
+// or the selected mode's ResponseViewer).
+// ============================================================
+
+import { useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { FiMenu, FiX, FiCheck, FiCopy } from "react-icons/fi";
+import { NAV_ITEMS, CHAT_SUGGESTIONS } from "../../constants/documentModes";
+import ChatPanel from "../ChatPanel";
+import ResponseViewer from "../ResponseViewer";
+import DesktopSidebar from "./DesktopSidebar";
+import MobileNavMenu from "./MobileNavMenu";
+import ScrollToBottomButton from "../ScrollToBottomButton";
+
+function FullScreenView({
+  isVisible,
+  sidebarOpen,
+  setSidebarOpen,
+  deskSessions,
+  deskSessionsLoading,
+  currentSessionId,
+  currentSessionTitle,
+  isTitleLoading,
+  activeMode,
+  setActiveMode,
+  selectedIds,
+  setSelectedIds,
+  cachedResults,
+  setCachedResults,
+  handleNavSelect,
+  loadSessionById,
+  handleDeleteDeskSession,
+  user,
+  menuOpen,
+  setMenuOpen,
+  handleCloseFullScreen,
+  processedDocs,
+  processedFileNames,
+  isPreloadedSession,
+  geminiKey,
+  token,
+  preloadedChatHistory,
+  setPreloadedChatHistory,
+  aiLoading,
+  analysisStage,
+  error,
+  aiResult,
+  glossary,
+  aiSourceFileNames = [],
+  handleCopy,
+  copied,
+}) {
+  // Top header subtitle is always the session title (Groq-generated) or
+  // filename fallback — constant regardless of which mode is active.
+  // Never overridden by which files a Summary/Notes/Explain result came from.
+  const sessionSubtitle = currentSessionTitle
+    ? currentSessionTitle
+    : isTitleLoading
+    ? null
+    : processedFileNames?.length > 1
+    ? `${processedFileNames.length} documents`
+    : processedFileNames?.[0];
+
+  // Compact "Based on: X" label shown INSIDE the mode content panel only —
+  // never in the top header.
+  const modeSourceLabel =
+    activeMode !== null && aiSourceFileNames.length > 0
+      ? aiSourceFileNames.length === 1
+        ? aiSourceFileNames[0]
+        : aiSourceFileNames.length === processedFileNames?.length
+        ? `All ${aiSourceFileNames.length} documents`
+        : `${aiSourceFileNames.length} of ${processedFileNames?.length} documents`
+      : null;
+
+  const selectedFileNames = processedDocs
+    .filter((doc) => selectedIds.includes(doc.id))
+    .map((doc) => doc.fileName);
+
+  const modeScrollRef = useRef(null);
+
+  return (
+    <AnimatePresence>
+      {isVisible && (
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 12 }}
+          transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+          className="fixed inset-0 z-50 bg-[#030712] flex"
+        >
+          <DesktopSidebar
+            sidebarOpen={sidebarOpen}
+            setSidebarOpen={setSidebarOpen}
+            activeMode={activeMode}
+            selectedIds={selectedIds}
+            cachedResults={cachedResults}
+            handleNavSelect={handleNavSelect}
+            user={user}
+            deskSessionsLoading={deskSessionsLoading}
+            deskSessions={deskSessions}
+            currentSessionId={currentSessionId}
+            loadSessionById={loadSessionById}
+            handleDeleteDeskSession={handleDeleteDeskSession}
+            processedDocs={processedDocs}
+            setSelectedIds={setSelectedIds}
+          />
+
+          <div className="flex-1 min-w-0 flex flex-col">
+            <div className="relative h-16 flex items-center justify-between px-4 sm:px-6 border-b border-white/10 shrink-0">
+              <button
+                onClick={() => setMenuOpen((v) => !v)}
+                className="sm:hidden w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 transition-all"
+                data-tooltip="Switch section"
+                data-tooltip-pos="bottom"
+                data-tooltip-align="start"
+              >
+                {menuOpen ? <FiX className="text-lg" /> : <FiMenu className="text-lg" />}
+              </button>
+
+              <div className="min-w-0 flex-1 px-3 text-center">
+                <h2 className="text-sm sm:text-base font-semibold text-white truncate leading-tight">
+                  {NAV_ITEMS.find((n) => n.type === activeMode)?.label || "Chat"}
+                </h2>
+                {sessionSubtitle && (
+                  <p className="text-[11px] sm:text-xs font-medium text-gray-400 truncate leading-tight mt-0.5">
+                    {sessionSubtitle}
+                  </p>
+                )}
+              </div>
+
+              <button
+                onClick={() =>
+                  activeMode === null
+                    ? handleCloseFullScreen()
+                    : setActiveMode(null)
+                }
+                className="cursor-pointer w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 transition-all"
+                data-tooltip={
+                  activeMode === null
+                    ? "Close and return to upload screen"
+                    : "Back to chat"
+                }
+                data-tooltip-pos="bottom"
+                data-tooltip-align="end"
+              >
+                <FiX className="text-lg" />
+              </button>
+
+              <MobileNavMenu
+                menuOpen={menuOpen}
+                setMenuOpen={setMenuOpen}
+                activeMode={activeMode}
+                handleNavSelect={handleNavSelect}
+                selectedIds={selectedIds}
+                cachedResults={cachedResults}
+                processedDocs={processedDocs}
+                setCachedResults={setCachedResults}
+                setSelectedIds={setSelectedIds}
+              />
+            </div>
+
+            <div className="flex-1 min-h-0 flex flex-col overflow-hidden">
+              {activeMode === null ? (
+                <ChatPanel
+                  selectedIds={selectedIds}
+                  selectedFileNames={selectedFileNames}
+                  isPreloadedSession={isPreloadedSession}
+                  currentSessionId={currentSessionId}
+                  geminiKey={geminiKey}
+                  token={token}
+                  messages={preloadedChatHistory}
+                  setMessages={setPreloadedChatHistory}
+                  suggestions={CHAT_SUGGESTIONS}
+                  modeOptions={NAV_ITEMS.filter((n) => n.type !== null)}
+                  onSelectMode={handleNavSelect}
+                  fullScreen
+                />
+              ) : (
+                <div className="relative flex-1 min-h-0">
+                  <div className="pointer-events-none absolute top-0 inset-x-0 h-6 sm:h-8 z-10 backdrop-blur-sm [mask-image:linear-gradient(to_bottom,black,transparent)]" />
+                  <div ref={modeScrollRef} className="h-full overflow-y-auto px-4 sm:px-6 py-5">
+                  <div className="max-w-3xl mx-auto">
+                    {/* First-ever generation for this mode — nothing on
+                        screen yet, show the full loading state. */}
+                    {aiLoading && !aiResult && (
+                      <div className="flex flex-col items-center gap-4 py-16">
+                        <motion.div
+                          animate={{ rotate: 360 }}
+                          transition={{
+                            repeat: Infinity,
+                            duration: 1.2,
+                            ease: "linear",
+                          }}
+                          className="w-10 h-10 rounded-full border-4 border-cyan-500/20 border-t-cyan-400"
+                        />
+                        <p className="text-cyan-300 font-medium text-center">
+                          {analysisStage || "Analyzing documents..."}
+                        </p>
+                      </div>
+                    )}
+
+                    {!aiLoading && !aiResult && error && (
+                      <p className="text-center text-red-400 text-sm py-6">{error}</p>
+                    )}
+
+                    {aiResult && (
+                    <motion.div
+                      key={activeMode}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.25 }}
+                      className="relative"
+                    >
+                      <div className="flex items-start justify-between gap-3 mb-3 flex-wrap">
+                        <div className="min-w-0">
+                          {modeSourceLabel && (
+                            <p className="text-xs text-gray-500 truncate">
+                              Based on: <span className="text-cyan-300/80">{modeSourceLabel}</span>
+                            </p>
+                          )}
+                        </div>
+                        <button
+                          onClick={handleCopy}
+                          className="cursor-pointer group relative flex items-center justify-center p-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-all text-xs text-gray-400 hover:text-white shrink-0"
+                        >
+                          {copied ? (
+                            <FiCheck className="text-sm" />
+                          ) : (
+                            <FiCopy className="text-sm" />
+                          )}
+                          <span className="pointer-events-none absolute -bottom-9 left-1/2 -translate-x-1/2 z-20 hidden sm:flex flex-col items-center opacity-0 scale-95 transition-all duration-150 sm:group-hover:opacity-100 sm:group-hover:scale-100">
+                            <span className="rounded-md border border-white/10 bg-[#0d1117] px-2.5 py-1 text-[11px] font-medium text-gray-200 shadow-lg shadow-black/40 whitespace-nowrap">
+                              {copied ? "Copied" : "Copy"}
+                            </span>
+                            <span className="w-2 h-2 -mt-1 rotate-45 border-l border-t border-white/10 bg-[#0d1117]" />
+                          </span>
+                        </button>
+                      </div>
+                      <div
+                        className={`transition-opacity duration-500 ${
+                          aiLoading ? "opacity-0 pointer-events-none" : "opacity-100"
+                        }`}
+                      >
+                        <ResponseViewer content={aiResult} glossary={glossary} />
+                      </div>
+
+                      {/* Centered "generating" overlay — the previous result
+                          fades out smoothly and this fades in over it while a
+                          new selection's Summary/Notes/Explain is produced. */}
+                      <AnimatePresence>
+                        {aiLoading && (
+                          <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.35 }}
+                            className="fixed inset-0 flex flex-col items-center justify-center gap-4 bg-[#030712]/70 backdrop-blur-sm z-30"
+                          >
+                            <motion.div
+                              animate={{ rotate: 360 }}
+                              transition={{ repeat: Infinity, duration: 1.2, ease: "linear" }}
+                              className="w-10 h-10 rounded-full border-4 border-cyan-500/20 border-t-cyan-400"
+                            />
+                            <p className="text-cyan-300 font-medium text-sm text-center px-4">
+                              {analysisStage || "Analyzing documents..."}
+                            </p>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </motion.div>
+                  )}
+                  </div>
+                  </div>
+
+                  <div className="absolute bottom-3 inset-x-0 z-20 flex justify-center">
+                    <ScrollToBottomButton scrollRef={modeScrollRef} deps={[aiResult, aiLoading]} />
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+export default FullScreenView;
