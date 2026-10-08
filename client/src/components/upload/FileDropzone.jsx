@@ -33,7 +33,7 @@ function FileDropzone({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.18, ease: "easeOut" }}
-          className="flex flex-col items-center text-center"
+          className="upload-empty-state flex flex-col items-center text-center"
         >
           <motion.div
             animate={{ y: [0, -6, 0] }}
@@ -42,22 +42,28 @@ function FileDropzone({
               duration: 3,
               ease: "easeInOut",
             }}
-            className="w-20 h-20 rounded-full bg-cyan-500/10 border border-cyan-400/20 flex items-center justify-center shadow-[0_0_40px_rgba(34,211,238,0.12)]"
+            className="upload-drop-icon w-20 h-20 rounded-full bg-cyan-500/10 border border-cyan-400/20 flex items-center justify-center shadow-[0_0_40px_rgba(34,211,238,0.12)]"
           >
             <FiUploadCloud className="text-4xl text-cyan-400" />
           </motion.div>
 
-          <p className="mt-1 text-gray-500 text-xs">
-            Drag & drop files here, or click to browse.
+          <h2 className="mt-5 text-xl sm:text-2xl font-semibold tracking-tight text-white">
+            Start with your documents
+          </h2>
+          <p className="mt-2 text-gray-400 text-sm">
+            Drag and drop files here, or browse to choose what to explore.
           </p>
 
           <label
             htmlFor="fileUpload"
-            className="mt-8 cursor-pointer inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:scale-[1.03] active:scale-[0.98] transition-all duration-300 font-medium shadow-[0_0_25px_rgba(34,211,238,0.3)] text-white select-none"
+            className="app-primary-button mt-6 cursor-pointer inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:scale-[1.03] active:scale-[0.98] transition-all duration-300 font-medium shadow-[0_0_25px_rgba(34,211,238,0.3)] text-white select-none"
           >
             <FiUploadCloud className="text-lg" />
             Select Documents / Images
           </label>
+          <p className="mt-3 text-[11px] text-gray-500">
+            PDF · DOCX · PPTX · TXT · PNG · JPG · WEBP
+          </p>
 
           <input
             id="fileUpload"
@@ -159,7 +165,7 @@ function FileDropzone({
                   whileTap={{ scale: 0.97 }}
                   onClick={handleUpload}
                   disabled={loading}
-                  className="cursor-pointer px-8 py-3 rounded-2xl bg-cyan-500/15 border border-cyan-400/25 hover:bg-cyan-500/25 transition-all shadow-[0_0_25px_rgba(34,211,238,0.1)] font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="app-primary-button cursor-pointer px-8 py-3 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 border border-cyan-300/20 hover:bg-cyan-500/25 transition-all shadow-[0_0_25px_rgba(34,211,238,0.1)] font-medium text-white disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? (
                     <span className="flex items-center gap-2">

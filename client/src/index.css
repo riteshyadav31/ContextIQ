@@ -11,10 +11,153 @@ html {
 body {
   margin: 0;
   padding: 0;
-  background: #030712;
-  color: white;
-  font-family: Inter, sans-serif;
+  background: #070b13;
+  color: #f4f7fb;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
   overflow-x: hidden;
+}
+
+::selection {
+  color: #f8fafc;
+  background: rgba(34, 211, 238, 0.3);
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid rgba(103, 232, 249, 0.85);
+  outline-offset: 3px;
+}
+
+.contextiq-app {
+  background:
+    radial-gradient(ellipse at 50% -18%, rgba(14, 116, 144, 0.18), transparent 44%),
+    radial-gradient(ellipse at 100% 70%, rgba(30, 64, 175, 0.08), transparent 36%),
+    #070b13;
+}
+
+.app-hero {
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.app-hero h1 {
+  font-size: clamp(2.35rem, 5.5vw, 4.5rem);
+  letter-spacing: -0.055em;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+.app-hero-copy {
+  max-width: 590px;
+  font-size: clamp(0.95rem, 1.5vw, 1.08rem);
+  color: #9aa8bc;
+}
+
+.hero-benefits {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.65rem 1.35rem;
+  margin-top: 1.4rem;
+  color: #a7b4c7;
+  font-size: 0.78rem;
+}
+
+.hero-benefits span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.hero-benefits svg {
+  color: #67e8f9;
+}
+
+.upload-surface {
+  position: relative;
+  isolation: isolate;
+  max-width: 920px;
+  margin-right: auto;
+  margin-left: auto;
+  border-color: rgba(148, 163, 184, 0.17) !important;
+  background:
+    linear-gradient(145deg, rgba(17, 27, 42, 0.92), rgba(10, 16, 27, 0.92)) !important;
+  box-shadow:
+    0 28px 90px rgba(0, 0, 0, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.045) !important;
+}
+
+.upload-empty-state {
+  min-height: 250px;
+  justify-content: center;
+  padding: 1rem 0.5rem;
+}
+
+.upload-drop-icon {
+  border-radius: 1.35rem !important;
+  background: linear-gradient(145deg, rgba(8, 145, 178, 0.18), rgba(37, 99, 235, 0.13)) !important;
+  border-color: rgba(103, 232, 249, 0.24) !important;
+  box-shadow: 0 16px 40px rgba(8, 145, 178, 0.13) !important;
+}
+
+.app-primary-button {
+  box-shadow: 0 10px 28px rgba(8, 145, 178, 0.2);
+  transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease;
+}
+
+.app-primary-button:hover:not(:disabled) {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+  box-shadow: 0 14px 34px rgba(8, 145, 178, 0.27);
+}
+
+.workspace-shell {
+  background:
+    radial-gradient(ellipse at 58% -20%, rgba(14, 116, 144, 0.1), transparent 42%),
+    #080c14 !important;
+}
+
+.workspace-sidebar {
+  background: rgba(10, 15, 24, 0.94);
+  border-color: rgba(148, 163, 184, 0.12) !important;
+}
+
+.workspace-header {
+  background: rgba(8, 12, 20, 0.72);
+  border-color: rgba(148, 163, 184, 0.12) !important;
+  backdrop-filter: blur(18px);
+}
+
+.app-modal-card {
+  background:
+    linear-gradient(150deg, rgba(19, 29, 43, 0.98), rgba(11, 17, 28, 0.99)) !important;
+  border-color: rgba(148, 163, 184, 0.2) !important;
+  box-shadow: 0 30px 100px rgba(0, 0, 0, 0.55) !important;
+}
+
+@media (max-width: 640px) {
+  .app-hero h1 {
+    letter-spacing: -0.045em;
+  }
+
+  .hero-benefits {
+    gap: 0.55rem 0.9rem;
+    font-size: 0.72rem;
+  }
+
+  .upload-empty-state {
+    min-height: 220px;
+  }
 }
 
 @keyframes fadeIn {

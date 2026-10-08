@@ -92,7 +92,7 @@ function FullScreenView({
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 12 }}
           transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed inset-0 z-50 bg-[#030712] flex"
+          className="workspace-shell fixed inset-0 z-50 flex"
         >
           <DesktopSidebar
             sidebarOpen={sidebarOpen}
@@ -112,7 +112,7 @@ function FullScreenView({
           />
 
           <div className="flex-1 min-w-0 flex flex-col">
-            <div className="relative h-16 flex items-center justify-between px-4 sm:px-6 border-b border-white/10 shrink-0">
+            <div className="workspace-header relative h-16 flex items-center justify-between px-4 sm:px-6 border-b border-white/10 shrink-0">
               <button
                 onClick={() => setMenuOpen((v) => !v)}
                 className="sm:hidden w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 transition-all"

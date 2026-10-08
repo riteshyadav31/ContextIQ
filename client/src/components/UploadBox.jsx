@@ -231,7 +231,7 @@ function UploadBox({ geminiKey, preloadedSession, onSessionSaved, onHeroVisibili
         onDragLeave={handleDragLeave}
         onDragOver={handleDragOver}
         onDrop={handleDrop}
-        className={`${isReviewingFiles ? "w-full" : "mt-10"} border backdrop-blur-2xl rounded-[28px] p-4 sm:p-8 md:p-12 shadow-[0_0_60px_rgba(0,255,255,0.04)] transition-all duration-200 ${
+        className={`upload-surface ${isReviewingFiles ? "w-full" : "mt-10"} border backdrop-blur-2xl rounded-[28px] p-4 sm:p-8 md:p-12 shadow-[0_0_60px_rgba(0,255,255,0.04)] transition-all duration-200 ${
           isDragging
             ? "border-cyan-400/60 bg-cyan-500/[0.08] scale-[1.01]"
             : "border-white/10 bg-white/[0.04]"

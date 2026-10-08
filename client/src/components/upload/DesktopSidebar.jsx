@@ -31,14 +31,14 @@ function DesktopSidebar({
 
   return (
     <div
-      className={`hidden sm:flex flex-col border-r border-white/10 shrink-0 transition-all duration-200 ${
+      className={`workspace-sidebar hidden sm:flex flex-col border-r border-white/10 shrink-0 transition-all duration-200 ${
         sidebarOpen ? "w-64 lg:w-72" : "w-16"
       }`}
     >
       <div className="h-16 flex items-center justify-between px-3 border-b border-white/10">
         {sidebarOpen && (
           <span className="text-lg font-bold text-white px-1 leading-none truncate tracking-tight">
-            DocuMind AI
+            ContextIQ
           </span>
         )}
         <button

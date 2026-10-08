@@ -1,6 +1,6 @@
 <div align="center">
 
-# 📄 DocuMind AI
+# 📄 ContextIQ
 
 **AI-powered document intelligence — upload, understand, and converse with your documents.**
 
@@ -8,7 +8,7 @@ Upload PDFs, Word docs, PowerPoints, text files, or images and instantly get AI-
 
 [Live Demo](https://documind-ai-brown.vercel.app) · [Report a Bug](https://github.com/AyushBaware/ai-document-assistant/issues) · [Request a Feature](https://github.com/AyushBaware/ai-document-assistant/issues)
 
-![DocuMind AI landing page](docs/screenshots/hero.png)
+![ContextIQ landing page](docs/screenshots/hero.png)
 
 </div>
 
@@ -34,7 +34,7 @@ Upload PDFs, Word docs, PowerPoints, text files, or images and instantly get AI-
 
 ## Overview
 
-DocuMind AI is a full-stack MERN application built to go beyond simple "upload and summarize" tools. It combines fast document processing with a proper **Retrieval-Augmented Generation (RAG)** pipeline, so users can not only generate summaries/notes/explanations but also **have a grounded conversation** with their documents — with citations, semantic search, and zero hallucinated answers outside the source material.
+ContextIQ is a full-stack MERN application built to go beyond simple "upload and summarize" tools. It combines fast document processing with a proper **Retrieval-Augmented Generation (RAG)** pipeline, so users can not only generate summaries/notes/explanations but also **have a grounded conversation** with their documents — with citations, semantic search, and zero hallucinated answers outside the source material.
 
 It supports both anonymous, single-session use and full account-based history via Google OAuth, with a persistent session sidebar modeled after Claude/Gemini's own chat interfaces.
 

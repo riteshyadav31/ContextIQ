@@ -144,7 +144,7 @@ function ApiKeyModal({
           exit={{ opacity: 0, scale: 0.92, y: 20 }}
           transition={{ duration: 0.35, ease: "easeOut" }}
           onClick={(e) => e.stopPropagation()} // clicks inside the card must never bubble up and trigger dismiss
-          className="w-full max-w-md bg-[#0d1117] border border-white/10 rounded-3xl p-6 sm:p-8 shadow-[0_0_60px_rgba(0,255,255,0.08)]"
+          className="app-modal-card w-full max-w-md bg-[#0d1117] border border-white/10 rounded-3xl p-6 sm:p-8 shadow-[0_0_60px_rgba(0,255,255,0.08)]"
         >
           {/* ICON */}
           <div className="flex justify-center mb-6">
@@ -160,7 +160,7 @@ function ApiKeyModal({
 
           {/* EXPLANATION */}
           <p className="text-gray-400 text-sm text-center leading-relaxed mb-6 px-2">
-            Powers DocuMind AI's document analysis —{" "}
+            Powers ContextIQ's document analysis —{" "}
             <span className="text-white font-medium">free from Google</span>,
             takes under a minute to set up.
           </p>
@@ -170,7 +170,7 @@ function ApiKeyModal({
             href="https://aistudio.google.com/apikey"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-sm font-semibold hover:opacity-90 transition-all shadow-[0_0_20px_rgba(34,211,238,0.2)] group"
+            className="app-primary-button flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-sm font-semibold hover:opacity-90 transition-all shadow-[0_0_20px_rgba(34,211,238,0.2)] group"
           >
             <FiExternalLink className="text-base group-hover:translate-x-0.5 transition-transform" />
             Get Free API Key
@@ -300,7 +300,7 @@ function ApiKeyModal({
             whileTap={{ scale: 0.98 }}
             onClick={handleSave}
             disabled={isValidating}
-            className="cursor-pointer w-full mt-4 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold text-sm hover:opacity-90 transition-all shadow-[0_0_20px_rgba(34,211,238,0.25)] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="app-primary-button cursor-pointer w-full mt-4 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold text-sm hover:opacity-90 transition-all shadow-[0_0_20px_rgba(34,211,238,0.25)] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             <FiCheck className="text-base" />
             {isValidating ? "Saving..." : "Save & Continue"}

@@ -253,7 +253,7 @@ function App() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
-      className={`relative bg-[#030712] text-white ${
+      className={`contextiq-app relative text-white ${
         hideHero
           ? "min-h-screen overflow-hidden"
           : "h-screen overflow-hidden flex flex-col"

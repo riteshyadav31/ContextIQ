@@ -1,6 +1,6 @@
 // HeroSection.jsx
 import { motion } from "framer-motion";
-import { FiFileText } from "react-icons/fi";
+import { FiCheckCircle, FiFileText, FiLock } from "react-icons/fi";
 
 function HeroSection() {
   return (
@@ -8,7 +8,7 @@ function HeroSection() {
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7 }}
-      className="text-center"
+      className="app-hero text-center"
     >
       <motion.div
         initial={{ opacity: 0, y: -10 }}
@@ -30,25 +30,31 @@ function HeroSection() {
           }}
         />
 
-        <span className="relative inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-[#030712]">
+        <span className="relative inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-[#080d17]">
           <FiFileText className="text-cyan-400 text-base shrink-0" />
           <span className="text-sm sm:text-base font-semibold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-400">
-            DocuMind AI
+            ContextIQ
           </span>
         </span>
       </motion.div>
 
-      <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold leading-tight tracking-tight">
-        Turn Documents Into
-        <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-          {" "}Smart Insights
+      <h1 className="font-bold">
+        Make sense of
+        <span className="block bg-gradient-to-r from-cyan-300 via-sky-400 to-blue-500 bg-clip-text text-transparent">
+          every document.
         </span>
       </h1>
 
-      <p className="mt-5 text-gray-400 text-sm md:text-base max-w-xl mx-auto leading-relaxed">
-        Upload a PDF, DOCX, or PPT — get instant summaries, notes, and
-        AI-powered answers.
+      <p className="app-hero-copy mt-5 mx-auto leading-relaxed">
+        Turn your files into clear summaries, useful notes, and grounded answers
+        you can trust.
       </p>
+
+      <div className="hero-benefits" aria-label="ContextIQ benefits">
+        <span><FiCheckCircle aria-hidden="true" /> Answers with source context</span>
+        <span><FiFileText aria-hidden="true" /> PDFs, documents & images</span>
+        <span><FiLock aria-hidden="true" /> Your API key stays private</span>
+      </div>
     </motion.div>
   );
 }

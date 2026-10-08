@@ -50,8 +50,8 @@ export default defineConfig({
       includeAssets: ["favicon.svg", "robots.txt", "apple-touch-icon.png"],
 
       manifest: {
-        name: "DocuMind AI",
-        short_name: "DocuMind AI",
+        name: "ContextIQ",
+        short_name: "ContextIQ",
         description:
           "Upload documents and get instant AI-powered summaries, notes, explanations, and a chat assistant.",
         theme_color: "#030712",
